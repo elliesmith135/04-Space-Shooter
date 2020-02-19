@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Enemy Bullet.gd" type="Script" id=1]
+[ext_resource path="res://Assets/PNG/Power-ups/pill_blue.png" type="Texture" id=2]
+
+[node name="Enemy Bullet" type="RigidBody2D"]
+collision_layer = 5
+collision_mask = 5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 156.443, 116.992 )
+rotation = 3.14159
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 156.443, 116.992 )
+rotation = -3.14159
+scale = Vector2( 0.5, 0.5 )
+polygon = PoolVector2Array( 11, 2.5, 4.6, 10.5, -11, 10.5, -11, -3.5, -4, -10.3, 11, -10.5 )

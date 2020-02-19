@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Backgrounds/blue.png" type="Texture" id=2]
+[ext_resource path="res://Assets/PNG/playerShip3_red.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Meteors.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Bullets.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Enemies.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/HUD.gd" type="Script" id=8]
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Background"]
+position = Vector2( 1, 2 )
+scale = Vector2( 4.00781, 2.99609 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Bullets" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="Bullets"]
+one_shot = true
+
+[node name="Enemy Bullets" type="Node2D" parent="."]
+rotation = -0.00336191
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( -1.41425, -154.149 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Player"]
+position = Vector2( 519, 710.5 )
+scale = Vector2( 0.973469, 1.38 )
+texture = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
+position = Vector2( 519, 710.5 )
+scale = Vector2( 0.973469, 1.38 )
+polygon = PoolVector2Array( 9, -35, 16.2, -21.5, 16.9, -21.5, 49, 15.5, 49, 32.5, 23.8, 32.5, 18.8, 37.5, -18.6, 37.5, -22.9, 32.5, -39.8, 32.5, -49, 33.5, -49, 15.4, -15, -23.2, -15, -25, -9, -36.1, -9, -37.5, 9, -37.5 )
+
+[node name="Meteors" type="Node2D" parent="."]
+position = Vector2( 137.398, 43.532 )
+script = ExtResource( 4 )
+
+[node name="Timer" type="Timer" parent="Meteors"]
+autostart = true
+
+[node name="Enemies" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="Enemies"]
+autostart = true
+
+[node name="Explosions" type="Node2D" parent="."]
+position = Vector2( 59.3338, 117.434 )
+
+[node name="HUD" type="Node2D" parent="."]
+position = Vector2( -37, 10 )
+script = ExtResource( 8 )
+
+[node name="Health" type="Label" parent="HUD"]
+margin_left = 58.0
+margin_top = 8.0
+margin_right = 138.0
+margin_bottom = 56.0
+text = "Health:
+
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="HUD"]
+margin_left = 959.0
+margin_top = 10.0
+margin_right = 1039.0
+margin_bottom = 58.0
+text = "Score:
+
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="timeout" from="Bullets/Timer" to="Bullets" method="_on_Timer_timeout"]
+[connection signal="health_changed" from="Player" to="HUD" method="_on_Player_health_changed"]
+[connection signal="score_changed" from="Player" to="HUD" method="_on_Player_score_changed"]
+[connection signal="timeout" from="Meteors/Timer" to="Meteors" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Enemies/Timer" to="Enemies" method="_on_Timer_timeout"]
